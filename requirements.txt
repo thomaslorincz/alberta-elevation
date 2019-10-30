@@ -1,0 +1,3 @@
+numpy>=1.14.0
+PyInquirer>=1.0.3
+pyproj>=2.2.1
