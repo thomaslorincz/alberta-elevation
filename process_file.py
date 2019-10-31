@@ -24,7 +24,7 @@ def main():
         print("Error: No CSV input files detected in the current directory.")
         exit(1)
         
-    input_question = [
+    input_questions = [
         {
             "type": "list",
             "message": "Select an input file",
@@ -33,24 +33,25 @@ def main():
         },
         {
             "type": "list",
-            "message": "Select the coordinate scheme",
-            "name": "scheme",
-            "choices": [{"name": "Lon/Lat"}, {"name": "X/Y"}]
+            "message": "Select the coordinate system",
+            "name": "system",
+            "choices": [
+                {"name": "Lon/Lat (EPSG 4326)"},
+                {"name": "X/Y (EPSG 3776)"}
+            ]
         }
     ]
     
-    input_answer = prompt(input_question, style=style)
+    input_answers = prompt(input_questions, style=style)
     
-    with open(input_answer["input"], "r") as f:
-        reader = csv.DictReader(f)
+    with open(input_answers["input"], "r") as in_file:
+        reader = csv.DictReader(in_file)
 
-        if input_answer["scheme"] == "Lon/Lat":
-            h_column = "longitude"
-            v_column = "latitude"
+        if input_answers["system"] == "Lon/Lat (EPSG 4326)":
+            h_column, v_column = "longitude", "latitude"
             lonlat = True
         else:
-            h_column = "x-coordinate"
-            v_column = "y-coordinate"
+            h_column, v_column = "x-coordinate", "y-coordinate"
             transformer = Transformer.from_crs("EPSG:3776", "EPSG:4326")
             lonlat = False
         
@@ -77,9 +78,9 @@ def main():
 
         process_answers = prompt(process_questions, style=style)
 
-        with open(process_answers["output"], "w", newline="") as f:
+        with open(process_answers["output"], "w", newline="") as out_file:
             fieldnames = reader.fieldnames + ["elevation"]
-            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer = csv.DictWriter(out_file, fieldnames=fieldnames)
 
             h, v = process_answers["horizontal"], process_answers["vertical"]
 
