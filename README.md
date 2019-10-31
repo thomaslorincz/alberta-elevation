@@ -34,10 +34,23 @@ python process_point.py -113.4938 53.5461
 ```
 ## process_file.py
 ### Usage
+Use the interactive CLI:
 ```
 python process_file.py
 ```
-Note: process_file.py walks through an interactive CLI
-
+Or, use command line arguments:
+```
+python process_file.py <input> <coordinate system> <horizontal> <vertical> <output>
+```
+Arguments:
+- input: The path to the input file
+- coordinate system: Either "lonlat" or "xy"
+- horizontal: The name of the column with horizontal coordinate data
+- vertical: The name of the column with vertical coordinate data
+- output (optional): The path to the output file (default = "output.csv")
+Example:
+```
+python process_file.py input.csv xy x-coord y-coord elevation_data.csv
+```
 Output:
-- This script will output a new file according to the options chosen in the interactive CLI.
+- This script will output a new file according to the options specified.
