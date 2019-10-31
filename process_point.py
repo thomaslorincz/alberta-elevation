@@ -15,7 +15,8 @@ def main():
     horizontal = abs(float(sys.argv[1]))
     vertical = abs(float(sys.argv[2]))
 
-    if math.log10(vertical) != 2 or math.log10(horizontal) != 3:
+    if math.floor(math.log10(vertical)) != 1 \
+            or math.floor(math.log10(horizontal)) != 2:
         transformer = Transformer.from_crs("EPSG:3776", "EPSG:4326")
         lat, lon = transformer.transform(horizontal, vertical)
     else:
