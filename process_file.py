@@ -84,7 +84,7 @@ def main():
             h, v = process_answers["horizontal"], process_answers["vertical"]
 
             writer.writeheader()
-            for i, row in enumerate(reader):
+            for row in reader:
                 if lonlat:
                     lon, lat = row[h], row[v]
                 else:
